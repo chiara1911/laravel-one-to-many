@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Str;
 
 use App\Models\Project;
 
@@ -17,7 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = Project::all();
+        $categories = Category::all();
         return view ('admin.categories.index', compact('categories'));
     }
 
@@ -36,6 +37,13 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         //
+        $formData = $request->validated();
+        //CREATE SLUG
+        $slug = Str::of($formData['name'])->slug('-');
+        //add slug to formData
+        $formData['slug'] = $slug;
+        $category = Category::create($formData);
+        return redirect()->route('admin.categories.show', $category->slug);
     }
 
     /**
@@ -62,6 +70,19 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         //
+        {
+            $formData = $request->validated();
+            $formData['slug'] = $category->slug;
+
+            if ($category->name !== $formData['name']) {
+                //CREATE SLUG
+                $slug = Str::of($formData['name'])->slug('-');
+                $formData['slug'] = $slug;
+            }
+            $category->update($formData);
+            return redirect()->route('admin.categories.show', $category->slug);
+
+        }
     }
 
     /**
