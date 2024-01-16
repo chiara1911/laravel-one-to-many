@@ -32,7 +32,8 @@ class ProjectController extends Controller
     {
         //
         $categories = Category::all();
-        return view('admin.projects.create');
+
+        return view('admin.projects.create', compact('categories'));
     }
 
     /**
@@ -41,7 +42,7 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         //
-        $formData = $request->validated();
+     $formData = $request->validated();
         // creo SLUG
         $slug = Project::getSlug($formData['title']);
         // aggiungo slug al form data
@@ -56,7 +57,8 @@ class ProjectController extends Controller
         }
         // dd($img_path);
         $project = Project::create($formData);
-        return to_route('admin.projects.index', $project->id);
+        dd($formData);
+        return to_route('admin.projects.show', $project->slugs);
     }
 
 
@@ -78,7 +80,7 @@ class ProjectController extends Controller
     {
         //
         $categories = Category::all();
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.edit', compact('project', 'categories'));
     }
 
     /**
