@@ -42,17 +42,17 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         //
-     $formData = $request->validated();
+        $formData = $request->validated();
         // creo SLUG
         $slug = Project::getSlug($formData['title']);
         // aggiungo slug al form data
         $formData['slug'] = $slug;
         //prendo l'ID dell'utente che si è loggato
-         $userId = Auth::id();
+        $userId = Auth::id();
         //aggiungo l'id utente in form data
         $formData['user_id'] = $userId;
         if ($request->hasFile('image')) {
-            $img_path = Storage::put('image', $request->image);
+            $img_path = Storage::put('images', $formData['image']);
             $formData['image'] = $img_path;
         }
         // dd($img_path);
@@ -90,9 +90,10 @@ class ProjectController extends Controller
     {
         //
         $formData = $request->validated();
+        $formData['slug'] = $project->slug;
         if ($project->title !== $formData['title']) {
             //CREATE SLUG
-            $slug = Project::slug($formData['title']);
+            $slug = Project::getSlug($formData['title']);
             $formData['slug'] = $slug;
         }
         //add slug to formData

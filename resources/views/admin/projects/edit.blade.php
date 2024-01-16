@@ -12,9 +12,7 @@
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Aggiungi titolo</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror
-
-             "
+                        <input type="text" class="form-control @error('title') is-invalid @enderror             "
                             id="title" name="title" value="{{ old('title', $project->title) }}">
                         @error('title')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -28,7 +26,7 @@
                             name="category_id">
                             <option value="">select a category</option>
                             @foreach ($categories as $category)
-                            <option value="{{$category_id}}" {{ old('category_id', $project->category_id) == $project->category_id ? 'selected' : '' }}>{{$category->name}}</option>
+                            <option value="{{ $category->id }}" {{ old('category_id', $project->category_id) ==  $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
 
                             @endforeach
                         </select>
