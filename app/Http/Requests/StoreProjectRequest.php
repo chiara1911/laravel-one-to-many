@@ -26,7 +26,9 @@ class StoreProjectRequest extends FormRequest
             'title'=>['required', 'min:3', 'max:200', 'unique:projects'],
             'description'=>['nullable'],
             'link'=> ['nullable', 'url'],
-            'image' => ['required']
+            'image' => ['required'],
+            // passa un id che esiste nella categoria
+            'category' => ['nullable', 'exists:categories,in']
         ];
     }
     public function messages(): array

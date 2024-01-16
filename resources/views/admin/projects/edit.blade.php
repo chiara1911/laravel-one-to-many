@@ -7,7 +7,7 @@
         <div class="row">
             @include('admin.partials.sidebar')
             <div class="col-10">
-                <form action="{{ route('admin.projects.store', $project->id) }}" enctype="multipart/form-data" method="POST">
+                <form action="{{ route('admin.projects.store', $project->slug) }}" enctype="multipart/form-data" method="POST">
                     @csrf
 
                     <div class="mb-3">
@@ -19,6 +19,22 @@
                         @error('title')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="category_id" >Select Category</label>
+                        <select class="form-control @error('category_id') is-invalid @enderror
+
+                     " id="category_id"
+                            name="category_id">
+                            <option value="">select a category</option>
+                            @foreach ($categories as $category)
+                            <option value="{{$category_id}}" {{old('category_id', $project->category_id) == $category->id ?}}>{{$category->name}}</option>
+
+                            @endforeach
+                        </select>
+                            @error('category_id')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrizione progetto</label>

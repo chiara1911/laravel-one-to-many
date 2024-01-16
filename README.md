@@ -207,9 +207,9 @@ Route::fallback(function() {
 
 
 
-# migration di esempio 
+# migration di esempio
 
-#nell'update di migration, nella parte 'up' 
+#nell'update di migration, nella parte 'up'
 
 
  Schema::table('projects', function (Blueprint $table) {
@@ -224,3 +224,5 @@ Route::fallback(function() {
 # nella parte down
 $table->dropForeign('projects_user_id_foreign');
             $table->dropColumn('user_id');
+
+```
