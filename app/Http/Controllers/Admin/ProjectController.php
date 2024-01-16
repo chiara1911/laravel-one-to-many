@@ -57,8 +57,8 @@ class ProjectController extends Controller
         }
         // dd($img_path);
         $project = Project::create($formData);
-        dd($formData);
-        return to_route('admin.projects.show', $project->slugs);
+        // dd($formData);
+        return to_route('admin.projects.show', $project->slug);
     }
 
 
